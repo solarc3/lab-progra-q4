@@ -30,6 +30,9 @@ class App(customtkinter.CTk):
 
         # Set default values
         mapa.map_widget.set_address("Maipu")
+        mapa.map_widget.set_zoom(14)
+        
+     def start(mapa):
         mapa.mainloop()
 
 
