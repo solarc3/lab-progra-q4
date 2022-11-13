@@ -42,6 +42,10 @@ Salida: GUI con mapa para poder hacer las denuncias
 def denunciante():
     global amount
     amount = 0
+    global markerlist
+    markerlist = []
+    global markerpos
+    markerpos = []
     '''
     Entrada: No tiene entrada.
     Descripcion: Funcion para analizar la entrada de coordenadas en tuple y
@@ -52,12 +56,19 @@ def denunciante():
     '''
     def add_marker(cords):
         global amount
+        global markerpos
+        global markerlist 
         real = utility_functions.convert_coordinates_to_address(cords[0],
                                                                 cords[1])
-        print(real.street, real.housenumber, real.latlng, real.postal)
+        print(real.street, real.housenumber, real.latlng, real.postal) 
         if real.postal[0] == "9" and real.postal[1] == "2" and real.postal[2] == "5" and amount == 0:
-            app.map_widget.set_marker(cords[0], cords[1]) 
+            markerpos.append(app.map_widget.set_marker(cords[0], cords[1]))
+            
+            print(markerpos)
             amount = amount + 1
+        elif amount >= 1 and real.postal[0] == "9" and real.postal[1] == "2" and real.postal[2] == "5":
+            messagebox.showinfo("Error",
+                                "Ya seleccionaste una posicion para el marcador")
         else:
             messagebox.showinfo("Error",
                                 "El lugar seleccionado no esta en maipu")
@@ -131,8 +142,12 @@ def denunciante():
 
 def restart_cordammount():
     global amount
+    global markerpos
+    for marker in markerpos:
+        marker.delete()
+        markerpos = []
     if amount > 0:
-        amount =  0
+        amount = 0
 '''
 Entrada: No tiene entrada.
 Descripcion: Funcion inicial para incializar todo el programa y la GUI de
