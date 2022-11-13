@@ -42,8 +42,6 @@ Salida: GUI con mapa para poder hacer las denuncias
 def denunciante():
     global amount
     amount = 0
-    global markerlist
-    markerlist = []
     global markerpos
     markerpos = []
     '''
@@ -57,7 +55,6 @@ def denunciante():
     def add_marker(cords):
         global amount
         global markerpos
-        global markerlist 
         real = utility_functions.convert_coordinates_to_address(cords[0],
                                                                 cords[1])
         print(real.street, real.housenumber, real.latlng, real.postal) 
