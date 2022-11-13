@@ -20,13 +20,14 @@ Que funciona ahora mismo?:
 -- se dispone de guardar los datos con Pandas a un CSV
 
 '''
+
+
 # BLOQUE DE DEFINICIONES
 # ----------------------------------------------------------------------------
 # IMPORTACION DE FUNCIONES
 # ----------------------------------------------------------------------------
 import customtkinter
-from tkintermapview import TkinterMapView
-from tkintermapview import utility_functions
+from tkintermapview import TkinterMapView, utility_functions
 from tkinter import messagebox
 # ----------------------------------------------------------------------------
 menu = customtkinter.CTk()  # Constante inicial para iniciar
@@ -38,57 +39,100 @@ Entrada: No tiene entrada.
 Descripcion: Funcion principal para la GUI de denuncias de cortes de agua
 Salida: GUI con mapa para poder hacer las denuncias
 '''
-
-
 def denunciante():
-
-    app = customtkinter.CTk()  # Constante inicial para iniciar
-    # el menu de denuncias
+    global amount
+    amount = 0
     '''
     Entrada: No tiene entrada.
-    Descripcion: Funcion para analisar la entrada de coordenadas en tuple y
+    Descripcion: Funcion para analizar la entrada de coordenadas en tuple y
     confirmar si estan dentro de la comuna de maipu via comparacion burda de
     los numeros iniciales del codigo postal (925)
     Salida: Estados descriptivos si es que la postal marcada esta dentro de
     maipu o no, y si lo esta, se agrega el marcador en el mapa
     '''
     def add_marker(cords):
+        global amount
         real = utility_functions.convert_coordinates_to_address(cords[0],
                                                                 cords[1])
         print(real.street, real.housenumber, real.latlng, real.postal)
-        if real.postal[0] == "9" and real.postal[1] == "2" and real.postal[2] == "5":
-            app.map_widget.set_marker(cords[0], cords[1])
+        if real.postal[0] == "9" and real.postal[1] == "2" and real.postal[2] == "5" and amount == 0:
+            app.map_widget.set_marker(cords[0], cords[1]) 
+            amount = amount + 1
         else:
             messagebox.showinfo("Error",
                                 "El lugar seleccionado no esta en maipu")
+        
 
-    app.title("GUI denuncias de fugas")  # Titulo de la ventana
-    # -- bloqque de geometria para el mapa
+    app = customtkinter.CTk()  # Constante inicial para iniciar
     app.geometry("800x500")
-    app.grid_columnconfigure(0, weight=0)  # primera columna
-    app.grid_columnconfigure(1, weight=1)  # segunda columna
-    app.grid_rowconfigure(0, weight=1)  # las filas no cambian
-    app.frame = customtkinter.CTkFrame()
-    app.frame.grid(row=0, column=1, sticky="nsew")
-    app.frame.grid_rowconfigure(1, weight=1)
-    app.frame.grid_columnconfigure(0, weight=1)
-    # -- invocacion de openmaps al grid
-    app.map_widget = TkinterMapView(app.frame)
-    app.map_widget.grid(row=1, column=0, sticky="nswe")
-    # -- direccion default de spawn
-    app.map_widget.set_address("Maipu")
-    app.map_widget.set_zoom(14)
-    # -- Comando que genera la opcion extra para poder recibir coordenadas
+    app.title("GUI denuncias de fugas")  # Titulo de la ventana
+    # -- bloque de geometria para el mapa
+    app.grid_columnconfigure(0, weight=0)
+    app.grid_columnconfigure(1, weight=1)
+    app.grid_rowconfigure(0, weight=1)
+    #creamos 2 frame
+    app.frame_left = customtkinter.CTkFrame(fg_color=None)
+    app.frame_left.grid(row=0, column=0)
+
+    app.frame_right = customtkinter.CTkFrame()
+    app.frame_right.grid(row=0, column=1, rowspan=1, pady=0, padx=0, sticky="nsew")
+    #----    
+    # frame right config
+    app.frame_right.grid_rowconfigure(1, weight=1)
+    app.frame_right.grid_rowconfigure(0, weight=0)
+    app.frame_right.grid_columnconfigure(0, weight=1)
+
+    # -- invocacion de openmaps al grid right
+    app.map_widget = TkinterMapView(app.frame_right)
+    app.map_widget.grid(row=1, column=0, columnspan=2, sticky="nswe")
+
+    # -- Comando que genera la opcion extra para poder recibir coordenada
     # se relaciona con la deficion add_marker
     app.map_widget.add_right_click_menu_command(label="Añadir un marcador",
                                                 command=add_marker,
                                                 pass_coords=True)
-
+    # --- defaults map_widget
+    app.map_widget.set_address("Maipu")
+    app.map_widget.set_zoom(14)
+    # --- left config stack o_o
+    app.frame_left.grid_rowconfigure(2, weight=1)
+    app.titulo = customtkinter.CTkLabel(master=app.frame_left,
+                                        text="Parametros de denuncias",
+                                        text_font=("Roboto Medium", -16))
+    app.titulo.grid(row=0, column=0, pady=10, padx=10)
+    app.boton_check = customtkinter.CTkButton(master=app.frame_left,
+                                              text="REINICIAR MARCADOR",
+                                              command=restart_cordammount)
+    app.boton_check.grid(pady=(20, 0), padx=(20, 20), row=8, column=0,sticky="nswe")
+    app.boton6 = customtkinter.CTkCheckBox(master=app.frame_left,
+                                           text="PLACEHOLDER 6")
+    app.boton6.grid(row=6, column=0, pady=10, padx=20, sticky="w")
+    app.boton5 = customtkinter.CTkCheckBox(master=app.frame_left,
+                                           text="PLACEHOLDER 5")
+    app.boton5.grid(row=5, column=0, pady=10, padx=20, sticky="w")
+    app.boton4 = customtkinter.CTkCheckBox(master=app.frame_left,
+                                           text="PLACEHOLDER 4")
+    app.boton4.grid(row=4, column=0, pady=10, padx=20, sticky="w")
+    app.boton3 = customtkinter.CTkCheckBox(master=app.frame_left,
+                                           text="PLACEHOLDER 3")
+    app.boton3.grid(row=3, column=0, pady=10, padx=20, sticky="w")
+    app.boton2 = customtkinter.CTkCheckBox(master=app.frame_left,
+                                           text="PLACEHOLDER 2")
+    app.boton2.grid(row=2, column=0, pady=10, padx=20, sticky="w")
+    app.boton1 = customtkinter.CTkCheckBox(master=app.frame_left,
+                                           text="PLACEHOLDER 1")
+    app.boton1.grid(row=1, column=0, pady=10, padx=20, sticky="w")
+    app.boton_check = customtkinter.CTkButton(master=app.frame_left,
+                                              text="INGRESAR DENUNCIA")
+    app.boton_check.grid(pady=(20, 0), padx=(20, 20), row=7, column=0,sticky="nswe")
     app.mainloop()
     # end
     return
 
-
+def restart_cordammount():
+    global amount
+    if amount > 0:
+        amount =  0
 '''
 Entrada: No tiene entrada.
 Descripcion: Funcion inicial para incializar todo el programa y la GUI de
