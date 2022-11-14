@@ -28,7 +28,9 @@ Que funciona ahora mismo?:
 # ----------------------------------------------------------------------------
 import customtkinter
 from tkintermapview import TkinterMapView, utility_functions
-from tkinter import messagebox
+import tkinter as tk
+import pandas as pd
+
 # ----------------------------------------------------------------------------
 menu = customtkinter.CTk()  # Constante inicial para iniciar
 # el menu de seleccion
@@ -39,7 +41,10 @@ Entrada: No tiene entrada.
 Descripcion: Funcion principal para la GUI de denuncias de cortes de agua
 Salida: GUI con mapa para poder hacer las denuncias
 '''
+
+
 def denunciante():
+    # se agregan variables globables para usarlas despues
     global amount
     amount = 0
     global markerpos
@@ -57,19 +62,19 @@ def denunciante():
         global markerpos
         real = utility_functions.convert_coordinates_to_address(cords[0],
                                                                 cords[1])
-        print(real.street, real.housenumber, real.latlng, real.postal) 
+#        print(real.street, real.housenumber, real.latlng, real.postal)
         if real.postal[0] == "9" and real.postal[1] == "2" and real.postal[2] == "5" and amount == 0:
             markerpos.append(app.map_widget.set_marker(cords[0], cords[1]))
-            
-            print(markerpos)
+            global latleng
+            latleng = real.latlng
+#            print(markerpos)
             amount = amount + 1
         elif amount >= 1 and real.postal[0] == "9" and real.postal[1] == "2" and real.postal[2] == "5":
-            messagebox.showinfo("Error",
-                                "Ya seleccionaste una posicion para el marcador")
+            tk.messagebox.showinfo("Error",
+                                   "Ya seleccionaste una posicion para el marcador, debes reiniciar tu seleccion con el boton")
         else:
-            messagebox.showinfo("Error",
-                                "El lugar seleccionado no esta en maipu")
-        
+            tk.messagebox.showinfo("Error",
+                                   "El lugar seleccionado no esta en maipu")
 
     app = customtkinter.CTk()  # Constante inicial para iniciar
     app.geometry("800x500")
@@ -78,13 +83,14 @@ def denunciante():
     app.grid_columnconfigure(0, weight=0)
     app.grid_columnconfigure(1, weight=1)
     app.grid_rowconfigure(0, weight=1)
-    #creamos 2 frame
+    # -- creamos 2 frame
+    # Se le agrega un fondo para que quede igual y no se vea feo
     app.frame_left = customtkinter.CTkFrame(fg_color=None)
     app.frame_left.grid(row=0, column=0)
 
     app.frame_right = customtkinter.CTkFrame()
-    app.frame_right.grid(row=0, column=1, rowspan=1, pady=0, padx=0, sticky="nsew")
-    #----    
+    app.frame_right.grid(row=0, column=1, rowspan=1, pady=0, padx=0,
+                         sticky="nsew")
     # frame right config
     app.frame_right.grid_rowconfigure(1, weight=1)
     app.frame_right.grid_rowconfigure(0, weight=0)
@@ -102,6 +108,21 @@ def denunciante():
     # --- defaults map_widget
     app.map_widget.set_address("Maipu")
     app.map_widget.set_zoom(14)
+
+    # -- global stack for checkboxs output
+    global is_checked_1
+    is_checked_1 = tk.IntVar()
+    global is_checked_2
+    is_checked_2 = tk.IntVar()
+    global is_checked_3
+    is_checked_3 = tk.IntVar()
+    global is_checked_4
+    is_checked_4 = tk.IntVar()
+    global is_checked_5
+    is_checked_5 = tk.IntVar()
+    global is_checked_6
+    is_checked_6 = tk.IntVar()
+
     # --- left config stack o_o
     app.frame_left.grid_rowconfigure(2, weight=1)
     app.titulo = customtkinter.CTkLabel(master=app.frame_left,
@@ -111,31 +132,74 @@ def denunciante():
     app.boton_check = customtkinter.CTkButton(master=app.frame_left,
                                               text="REINICIAR MARCADOR",
                                               command=restart_cordammount)
-    app.boton_check.grid(pady=(20, 0), padx=(20, 20), row=8, column=0,sticky="nswe")
+    app.boton_check.grid(pady=(20, 0), padx=(20, 20), row=8,
+                         column=0,sticky="nswe")
     app.boton6 = customtkinter.CTkCheckBox(master=app.frame_left,
-                                           text="PLACEHOLDER 6")
+                                           text="PLACEHOLDER 6",
+                                           onvalue=1, offvalue=0,
+                                           variable=is_checked_6)
     app.boton6.grid(row=6, column=0, pady=10, padx=20, sticky="w")
     app.boton5 = customtkinter.CTkCheckBox(master=app.frame_left,
-                                           text="PLACEHOLDER 5")
+                                           text="PLACEHOLDER 5", 
+                                           onvalue=1, offvalue=0,
+                                           variable=is_checked_5)
     app.boton5.grid(row=5, column=0, pady=10, padx=20, sticky="w")
     app.boton4 = customtkinter.CTkCheckBox(master=app.frame_left,
-                                           text="PLACEHOLDER 4")
+                                           text="PLACEHOLDER 4",
+                                           onvalue=1,offvalue=0,
+                                           variable=is_checked_4)
     app.boton4.grid(row=4, column=0, pady=10, padx=20, sticky="w")
     app.boton3 = customtkinter.CTkCheckBox(master=app.frame_left,
-                                           text="PLACEHOLDER 3")
+                                           text="PLACEHOLDER 3", 
+                                           onvalue=1, offvalue=0,
+                                           variable=is_checked_3)
     app.boton3.grid(row=3, column=0, pady=10, padx=20, sticky="w")
     app.boton2 = customtkinter.CTkCheckBox(master=app.frame_left,
-                                           text="PLACEHOLDER 2")
+                                           text="PLACEHOLDER 2",
+                                           onvalue=1, offvalue=0,
+                                           variable=is_checked_2)
     app.boton2.grid(row=2, column=0, pady=10, padx=20, sticky="w")
     app.boton1 = customtkinter.CTkCheckBox(master=app.frame_left,
-                                           text="PLACEHOLDER 1")
+                                           text="PLACEHOLDER 1", 
+                                           onvalue=1, offvalue=0,
+                                           variable=is_checked_1)
     app.boton1.grid(row=1, column=0, pady=10, padx=20, sticky="w")
     app.boton_check = customtkinter.CTkButton(master=app.frame_left,
-                                              text="INGRESAR DENUNCIA")
-    app.boton_check.grid(pady=(20, 0), padx=(20, 20), row=7, column=0,sticky="nswe")
+                                              text="INGRESAR DENUNCIA",
+                                              command=selection)
+    app.boton_check.grid(pady=(20, 0), padx=(20, 20), row=7,
+                         column=0, sticky="nswe")
+
     app.mainloop()
+
     # end
-    return
+
+
+'''
+Entrada: No tiene entrada.
+Descripcion: Funcion para registrar datos y exportarlos al csv
+Salida: message box de confirmacion y datos exportados
+'''
+
+
+def selection():
+    #
+    sum = is_checked_1.get() + is_checked_2.get() + is_checked_3.get() + is_checked_4.get() + is_checked_5.get() + is_checked_6.get()
+    tk.messagebox.showinfo("Completado", f"{sum} parametros fueron seleccionados y las coordenadas son {latleng}")
+    export = [sum, tuple(latleng)]  # sublista de cords y la cantidad de checkboxs es lo que nos interesa exportar
+    print(export)
+    df = pd.DataFrame(export)
+    df.to_csv("C:\Code-1\lab prograa\experimental.csv",
+              mode="a", index=False, header=False) # se fuerza path debido a
+              # que es experimental aun
+              
+
+'''
+Entrada: Cantidad de markers puestos 
+Descripcion: registra la cantidad de marcadores puestos y pone como limite 1,
+da la opcion de eliminarlo de la lista canvas(tkinter method) para agregar otro
+Salida: al usarlo remueve el marcador y el canvas de la lista y la devuelve empty
+'''
 
 def restart_cordammount():
     global amount
@@ -145,6 +209,8 @@ def restart_cordammount():
         markerpos = []
     if amount > 0:
         amount = 0
+
+
 '''
 Entrada: No tiene entrada.
 Descripcion: Funcion inicial para incializar todo el programa y la GUI de
@@ -172,8 +238,8 @@ def starting_menu():
             # ventana el menu seleccionado
             customtkinter.CTkToplevel(denunciante())
         else:
-            messagebox.showinfo("Error",
-                                "Ventana de Operador aun en desarrollo")
+            tk.messagebox.showinfo("Error",
+                                   "Ventana de Operador aun en desarrollo")
             # no se hace lo mismo que en la otra ventana ya que aun no hay
             # funcion definida para la GUI de operadores
 
