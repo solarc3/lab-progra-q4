@@ -12,12 +12,15 @@
 # 6. Ignacio Vicenzo D'agostino Jara 21.226.101-7
 # DESCRIPCIÓN DEL PROGRAMA
 '''
-Parte 1 del sistema de denuncias de agua.
+Parte 2 del sistema de denuncias de agua.
 Que funciona ahora mismo?:
 -Sistema de seleccion de entrada entre denunciante o funcionario de SMAPA
 -Sistema para agregar marcadores en el mapa que sean solamente en Maipu
--- El logeo de coordenadas de marcadores validos sucede via la consola, aun no
--- se dispone de guardar los datos con Pandas a un CSV
+- (nuevo) Logeo y limite de marcadores agregado
+- checkboxs placeholders para las condiciones de las denuncias
+- exportacion de coordenadas en tuple a un csv
+- lo unico que faltaria es agrergar la ventana del operador y manejar
+--datos del csv correctamente.
 
 '''
 
