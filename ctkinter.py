@@ -136,24 +136,24 @@ def denunciante():
                                               text="REINICIAR MARCADOR",
                                               command=restart_cordammount)
     app.boton_check.grid(pady=(20, 0), padx=(20, 20), row=8,
-                         column=0,sticky="nswe")
+                         column=0, sticky="nswe")
     app.boton6 = customtkinter.CTkCheckBox(master=app.frame_left,
                                            text="PLACEHOLDER 6",
                                            onvalue=1, offvalue=0,
                                            variable=is_checked_6)
     app.boton6.grid(row=6, column=0, pady=10, padx=20, sticky="w")
     app.boton5 = customtkinter.CTkCheckBox(master=app.frame_left,
-                                           text="PLACEHOLDER 5", 
+                                           text="PLACEHOLDER 5",
                                            onvalue=1, offvalue=0,
                                            variable=is_checked_5)
     app.boton5.grid(row=5, column=0, pady=10, padx=20, sticky="w")
     app.boton4 = customtkinter.CTkCheckBox(master=app.frame_left,
                                            text="PLACEHOLDER 4",
-                                           onvalue=1,offvalue=0,
+                                           onvalue=1, offvalue=0,
                                            variable=is_checked_4)
     app.boton4.grid(row=4, column=0, pady=10, padx=20, sticky="w")
     app.boton3 = customtkinter.CTkCheckBox(master=app.frame_left,
-                                           text="PLACEHOLDER 3", 
+                                           text="PLACEHOLDER 3",
                                            onvalue=1, offvalue=0,
                                            variable=is_checked_3)
     app.boton3.grid(row=3, column=0, pady=10, padx=20, sticky="w")
@@ -163,7 +163,7 @@ def denunciante():
                                            variable=is_checked_2)
     app.boton2.grid(row=2, column=0, pady=10, padx=20, sticky="w")
     app.boton1 = customtkinter.CTkCheckBox(master=app.frame_left,
-                                           text="PLACEHOLDER 1", 
+                                           text="PLACEHOLDER 1",
                                            onvalue=1, offvalue=0,
                                            variable=is_checked_1)
     app.boton1.grid(row=1, column=0, pady=10, padx=20, sticky="w")
@@ -173,6 +173,13 @@ def denunciante():
     app.boton_check.grid(pady=(20, 0), padx=(20, 20), row=7,
                          column=0, sticky="nswe")
 
+    def restart_menu():
+        app.destroy()
+        starting_menu()
+    app.restart = customtkinter.CTkButton(
+        master=app.frame_left, text="Volver al menu principal", command=restart_menu)
+    app.restart.grid(pady=(20, 0), padx=(20, 20), row=9,
+                     column=0, sticky="nswe")
     app.mainloop()
 
     # end
@@ -187,15 +194,18 @@ Salida: message box de confirmacion y datos exportados
 
 def selection():
     #
-    sum = is_checked_1.get() + is_checked_2.get() + is_checked_3.get() + is_checked_4.get() + is_checked_5.get() + is_checked_6.get()
-    tk.messagebox.showinfo("Completado", f"{sum} parametros fueron seleccionados y las coordenadas son {latleng}")
-    export = [sum, tuple(latleng)]  # sublista de cords y la cantidad de checkboxs es lo que nos interesa exportar
+    sum = is_checked_1.get() + is_checked_2.get() + is_checked_3.get() + \
+        is_checked_4.get() + is_checked_5.get() + is_checked_6.get()
+    tk.messagebox.showinfo(
+        "Completado", f"{sum} parametros fueron seleccionados y las coordenadas son {latleng}")
+    # sublista de cords y la cantidad de checkboxs es lo que nos interesa exportar
+    export = [sum, tuple(latleng)]
     print(export)
     df = pd.DataFrame(export)
     df.to_csv("C:\Code-1\lab prograa\experimental.csv",
-              mode="a", index=False, header=False) # se fuerza path debido a
-              # que es experimental aun
-              
+              mode="a", index=False, header=False)  # se fuerza path debido a
+    # que es experimental aun
+
 
 '''
 Entrada: Cantidad de markers puestos 
@@ -203,6 +213,7 @@ Descripcion: registra la cantidad de marcadores puestos y pone como limite 1,
 da la opcion de eliminarlo de la lista canvas(tkinter method) para agregar otro
 Salida: al usarlo remueve el marcador y el canvas de la lista y la devuelve empty
 '''
+
 
 def restart_cordammount():
     global amount
@@ -220,7 +231,40 @@ Descripcion: Funcion inicial para incializar todo el programa y la GUI de
 seleccion de sub interfaces
 Salida: Sub-GUI seleccionada dependiendo de quien sea el usuario
 '''
+def operador():
+    smapa = customtkinter.CTk()
+    smapa.geometry("800x500")
+    smapa.title("Operador SMAPA")
+        # -- bloque de geometria para el mapa
+    smapa.grid_columnconfigure(0, weight=0)
+    smapa.grid_columnconfigure(1, weight=1)
+    smapa.grid_rowconfigure(0, weight=1)
+    # -- creamos 2 frame
+    # Se le agrega un fondo para que quede igual y no se vea feo
+    smapa.frame_left = customtkinter.CTkFrame(fg_color=None)
+    smapa.frame_left.grid(row=0, column=0)
 
+    smapa.frame_right = customtkinter.CTkFrame()
+    smapa.frame_right.grid(row=0, column=1, rowspan=1, pady=0, padx=0,
+                         sticky="nsew")
+    # frame right config
+    smapa.frame_right.grid_rowconfigure(1, weight=1)
+    smapa.frame_right.grid_rowconfigure(0, weight=0)
+    smapa.frame_right.grid_columnconfigure(0, weight=1)
+
+    # -- invocacion de openmaps al grid right
+    smapa.map_widget = TkinterMapView(smapa.frame_right)
+    smapa.map_widget.grid(row=1, column=0, columnspan=2, sticky="nswe")
+
+    # -- Comando que genera la opcion extra para poder recibir coordenada
+    # se relaciona con la deficion add_marker
+    smapa.map_widget.add_right_click_menu_command(label="Añadir un marcador",
+                                                command=add_marker,
+                                                pass_coords=True)
+        # --- defaults map_widget
+    smapa.map_widget.set_address("Maipu")
+    smapa.map_widget.set_zoom(14)
+    smapa.mainloop()
 
 def starting_menu():
     menu.geometry("400x200")
@@ -240,9 +284,11 @@ def starting_menu():
             menu.destroy()  # apaga el mini menu para luego iniciar en otra
             # ventana el menu seleccionado
             customtkinter.CTkToplevel(denunciante())
-        else:
-            tk.messagebox.showinfo("Error",
-                                   "Ventana de Operador aun en desarrollo")
+        if choice == "Operador SMAPA":
+            menu.destroy()  # apaga el mini menu para luego iniciar en otra
+            # ventana el menu seleccionado
+            customtkinter.CTkToplevel(operador())
+
             # no se hace lo mismo que en la otra ventana ya que aun no hay
             # funcion definida para la GUI de operadores
 
