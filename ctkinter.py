@@ -232,6 +232,18 @@ seleccion de sub interfaces
 Salida: Sub-GUI seleccionada dependiendo de quien sea el usuario
 '''
 def operador():
+
+    '''
+    Entrada: No tiene entrada.
+    Descripcion: Funcion para invocar todas las coordenadas del csv y 
+    su respectivo marcador
+    Salida: marcadores tkinter canvas invocados en el frame del mapa
+    '''
+    def csv_input():
+
+
+
+        return
     smapa = customtkinter.CTk()
     smapa.geometry("800x500")
     smapa.title("Operador SMAPA")
