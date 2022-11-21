@@ -257,13 +257,14 @@ def operador():
     smapa.map_widget.grid(row=1, column=0, columnspan=2, sticky="nswe")
 
     # -- Comando que genera la opcion extra para poder recibir coordenada
-    # se relaciona con la deficion add_marker
-    smapa.map_widget.add_right_click_menu_command(label="Añadir un marcador",
-                                                command=add_marker,
-                                                pass_coords=True)
         # --- defaults map_widget
     smapa.map_widget.set_address("Maipu")
     smapa.map_widget.set_zoom(14)
+
+    smapa.boton_check = customtkinter.CTkButton(master=smapa.frame_left,
+                                              text="HOLAAAA")
+    smapa.boton_check.grid(pady=(20, 0), padx=(20, 20), row=7,
+                         column=0, sticky="nswe")
     smapa.mainloop()
 
 def starting_menu():
