@@ -19,8 +19,7 @@ Que funciona ahora mismo?:
 - (nuevo) Logeo y limite de marcadores agregado
 - checkboxs placeholders para las condiciones de las denuncias
 - exportacion de coordenadas en tuple a un csv
-- lo unico que faltaria es agrergar la ventana del operador y manejar
---datos del csv correctamente.
+- lo unico que falta es cargar los datos a la interfaz de smapa
 
 '''
 
