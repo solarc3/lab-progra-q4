@@ -31,6 +31,8 @@ import customtkinter
 from tkintermapview import TkinterMapView, utility_functions
 import tkinter as tk
 import pandas as pd
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
 
 # ----------------------------------------------------------------------------
 menu = customtkinter.CTk()  # Constante inicial para iniciar
@@ -170,14 +172,6 @@ def denunciante():
                                               command=selection)
     app.boton_check.grid(pady=(20, 0), padx=(20, 20), row=7,
                          column=0, sticky="nswe")
-
-    def restart_menu():
-        app.destroy()
-        starting_menu()
-    app.restart = customtkinter.CTkButton(
-        master=app.frame_left, text="Volver al menu principal", command=restart_menu)
-    app.restart.grid(pady=(20, 0), padx=(20, 20), row=9,
-                     column=0, sticky="nswe")
     app.mainloop()
 
     # end
@@ -199,23 +193,23 @@ def selection():
     # sublista de cords y la cantidad de checkboxs es lo que nos interesa exportar
 
     #Elaboracion del dataframe
-    export_sum=[]
-    export_coord=[]
-    export_coord_aux=[]
+    export_sum = []
+    export_coord = []
+    export_coord_aux = []
 
     export_sum.append(sum)
-    export_coord.append(tuple(latleng))
+    export_coord.append(list(latleng))
     export_coord_aux.append(export_coord)
 
-    columna1=["Parametros"]
-    columna2=["Coordenadas"]
-    df_coord=pd.DataFrame(export_coord_aux,columns=columna2)
-    df_param=pd.DataFrame(export_sum,columns=columna1)
-    df_datos=pd.concat([df_param,df_coord],axis=1)
+    columna1 = ["Parametros"]
+    columna2 = ["Coordenadas"]
+    df_coord = pd.DataFrame(export_coord_aux,columns=columna2)
+    df_param = pd.DataFrame(export_sum,columns=columna1)
+    df_datos = pd.concat([df_param,df_coord],axis=1)
 
     #Exportación del dataframe
     df_datos.to_csv("experimental.csv",
-              index=False, sep=";", header=False)
+              index=False, sep=";", header=False,mode="a")
 
 '''
 Entrada: Cantidad de markers puestos 
@@ -250,11 +244,28 @@ def operador():
     Salida: marcadores tkinter canvas invocados en el frame del mapa
     '''
     def csv_input():
-        return #requiere generarlo con cuidado, ya que genera memleak.
+        i = 0
+        datos = pd.read_csv("experimental.csv",sep=";",header=None)
+        datosy = datos[1]
+        datosx = datos[0]
+        largo = len(datosy)
+        while i < largo:
+            oneparameter = datosx.iloc[i]
+            onedata = eval(datosy.iloc[i])
+            lat = onedata[0]
+            long = onedata[1]
+            smapa.map_widget.set_marker(lat, long,
+                                        text=f"{oneparameter} parametros")
+            i += 1
+
+    def plot():
+        return #todo
+ 
+# requiere generarlo con cuidado, ya que genera memleak.
     smapa = customtkinter.CTk()
     smapa.geometry("800x500")
     smapa.title("Operador SMAPA")
-        # -- bloque de geometria para el mapa
+    # -- bloque de geometria para el mapa
     smapa.grid_columnconfigure(0, weight=0)
     smapa.grid_columnconfigure(1, weight=1)
     smapa.grid_rowconfigure(0, weight=1)
@@ -281,10 +292,17 @@ def operador():
     smapa.map_widget.set_zoom(14)
 
     smapa.boton_check = customtkinter.CTkButton(master=smapa.frame_left,
-                                                text="PLACEHOLDER")
-    #placeholder para agregar el comando de csv input
+                                                text="PLACEHOLDER",
+                                                command=csv_input)
+    # placeholder para agregar el comando de csv input
     smapa.boton_check.grid(pady=(20, 0), padx=(20, 20), row=7,
-                         column=0, sticky="nswe")
+                           column=0, sticky="nswe")
+    smapa.boton_graph = customtkinter.CTkButton(master=smapa.frame_left,
+                                                text="analisis",
+                                                command=plot)
+    # placeholder para agregar el comando de csv input
+    smapa.boton_graph.grid(pady=(20, 0), padx=(20, 20), row=8,
+                           column=0, sticky="nswe")
     smapa.mainloop()
 
 def starting_menu():
