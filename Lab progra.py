@@ -31,8 +31,7 @@ import customtkinter
 from tkintermapview import TkinterMapView, utility_functions
 import tkinter as tk
 import pandas as pd
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from matplotlib.figure import Figure
+import matplotlib.pyplot as plt
 
 # ----------------------------------------------------------------------------
 menu = customtkinter.CTk()  # Constante inicial para iniciar
@@ -189,11 +188,10 @@ def selection():
     sum = is_checked_1.get() + is_checked_2.get() + is_checked_3.get() + \
         is_checked_4.get() + is_checked_5.get() + is_checked_6.get()
     tk.messagebox.showinfo(
-        "Completado",
-        f"{sum} parametros seleccionados y las coordenadas son {latleng}")
-    # sublista de cords y la cantidad de checkboxs es lo que nos interesa
+        "Completado", f"{sum} parametros fueron seleccionados y las coordenadas son {latleng}")
+    # sublista de cords y la cantidad de checkboxs es lo que nos interesa exportar
 
-    #   Elaboracion del dataframe
+    #Elaboracion del dataframe
     export_sum = []
     export_coord = []
     export_coord_aux = []
@@ -204,20 +202,20 @@ def selection():
 
     columna1 = ["Parametros"]
     columna2 = ["Coordenadas"]
-    df_coord = pd.DataFrame(export_coord_aux, columns=columna2)
-    df_param = pd.DataFrame(export_sum, columns=columna1)
-    df_datos = pd.concat([df_param, df_coord], axis=1)
+    df_coord = pd.DataFrame(export_coord_aux,columns=columna2)
+    df_param = pd.DataFrame(export_sum,columns=columna1)
+    df_datos = pd.concat([df_param,df_coord],axis=1)
 
-    # Exportación del dataframe
+    #Exportación del dataframe
     df_datos.to_csv("experimental.csv",
-                    index=False, sep=";", header=False, mode="a")
+              index=False, sep=";", header=False,mode="a")
 
 
 '''
 Entrada: Cantidad de markers puestos
 Descripcion: registra la cantidad de marcadores puestos y pone como limite 1,
 da la opcion de eliminarlo de la lista canvas(tkinter method) para agregar otro
-Salida: al usarlo remueve el marcador y el canvas de la lista
+Salida: al usarlo remueve el marcador y el canvas de la lista y queda empty
 '''
 
 
@@ -263,8 +261,44 @@ def operador():
             i += 1
 
     def plot():
-        return  # todo
+        def leer():
+            archivo = "experimental.csv"
+            df = pd.read_csv(archivo, sep=";", header=None)
 
+            return df
+
+        def cuentaParametros(df):
+            dimension = df.shape
+            cantidad_parametros = [0, 0, 0, 0, 0, 0, 0]
+
+            for i in range(0, dimension[0]):
+                if df[0][i] == 0:
+                    cantidad_parametros[0] = cantidad_parametros[0] + 1
+                elif df[0][i] == 1:
+                    cantidad_parametros[1] = cantidad_parametros[1] + 1
+                elif df[0][i] == 2:
+                    cantidad_parametros[2] = cantidad_parametros[2] + 1
+                elif df[0][i] == 3:
+                    cantidad_parametros[3] = cantidad_parametros[3] + 1
+                elif df[0][i] == 4:
+                    cantidad_parametros[4] = cantidad_parametros[4] + 1
+                elif df[0][i] == 5:
+                    cantidad_parametros[5] = cantidad_parametros[5] + 1
+                elif df[0][i] == 6:
+                    cantidad_parametros[6] = cantidad_parametros[6] + 1
+
+            return cantidad_parametros
+
+        df_proyecto = leer()
+        contador = cuentaParametros(df_proyecto)
+        etiquetas = [0, 1, 2, 3, 4, 5, 6]  # x
+        valores = int(contador)  # y
+        plt.bar(etiquetas, valores)
+        plt.xlabel("Cantidad de Parametros")
+        plt.ylabel("Repeticion de Parametros")
+        plt.show()
+
+        return  # todo
 # requiere generarlo con cuidado, ya que genera memleak.
     smapa = customtkinter.CTk()
     smapa.geometry("800x500")
