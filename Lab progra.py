@@ -189,10 +189,11 @@ def selection():
     sum = is_checked_1.get() + is_checked_2.get() + is_checked_3.get() + \
         is_checked_4.get() + is_checked_5.get() + is_checked_6.get()
     tk.messagebox.showinfo(
-        "Completado", f"{sum} parametros fueron seleccionados y las coordenadas son {latleng}")
-    # sublista de cords y la cantidad de checkboxs es lo que nos interesa exportar
+        "Completado",
+        f"{sum} parametros seleccionados y las coordenadas son {latleng}")
+    # sublista de cords y la cantidad de checkboxs es lo que nos interesa
 
-    #Elaboracion del dataframe
+    #   Elaboracion del dataframe
     export_sum = []
     export_coord = []
     export_coord_aux = []
@@ -203,19 +204,20 @@ def selection():
 
     columna1 = ["Parametros"]
     columna2 = ["Coordenadas"]
-    df_coord = pd.DataFrame(export_coord_aux,columns=columna2)
-    df_param = pd.DataFrame(export_sum,columns=columna1)
-    df_datos = pd.concat([df_param,df_coord],axis=1)
+    df_coord = pd.DataFrame(export_coord_aux, columns=columna2)
+    df_param = pd.DataFrame(export_sum, columns=columna1)
+    df_datos = pd.concat([df_param, df_coord], axis=1)
 
-    #Exportación del dataframe
+    # Exportación del dataframe
     df_datos.to_csv("experimental.csv",
-              index=False, sep=";", header=False,mode="a")
+                    index=False, sep=";", header=False, mode="a")
+
 
 '''
-Entrada: Cantidad de markers puestos 
+Entrada: Cantidad de markers puestos
 Descripcion: registra la cantidad de marcadores puestos y pone como limite 1,
 da la opcion de eliminarlo de la lista canvas(tkinter method) para agregar otro
-Salida: al usarlo remueve el marcador y el canvas de la lista y la devuelve empty
+Salida: al usarlo remueve el marcador y el canvas de la lista
 '''
 
 
@@ -235,17 +237,19 @@ Descripcion: Funcion inicial para incializar todo el programa y la GUI de
 seleccion de sub interfaces
 Salida: Sub-GUI seleccionada dependiendo de quien sea el usuario
 '''
+
+
 def operador():
 
     '''
     Entrada: No tiene entrada.
-    Descripcion: Funcion para invocar todas las coordenadas del csv y 
+    Descripcion: Funcion para invocar todas las coordenadas del csv y
     su respectivo marcador
     Salida: marcadores tkinter canvas invocados en el frame del mapa
     '''
     def csv_input():
         i = 0
-        datos = pd.read_csv("experimental.csv",sep=";",header=None)
+        datos = pd.read_csv("experimental.csv", sep=";", header=None)
         datosy = datos[1]
         datosx = datos[0]
         largo = len(datosy)
@@ -259,8 +263,8 @@ def operador():
             i += 1
 
     def plot():
-        return #todo
- 
+        return  # todo
+
 # requiere generarlo con cuidado, ya que genera memleak.
     smapa = customtkinter.CTk()
     smapa.geometry("800x500")
@@ -287,7 +291,7 @@ def operador():
     smapa.map_widget.grid(row=1, column=0, columnspan=2, sticky="nswe")
 
     # -- Comando que genera la opcion extra para poder recibir coordenada
-        # --- defaults map_widget
+    # --- defaults map_widget
     smapa.map_widget.set_address("Maipu")
     smapa.map_widget.set_zoom(14)
 
@@ -304,6 +308,7 @@ def operador():
     smapa.boton_graph.grid(pady=(20, 0), padx=(20, 20), row=8,
                            column=0, sticky="nswe")
     smapa.mainloop()
+
 
 def starting_menu():
     menu.geometry("400x200")
