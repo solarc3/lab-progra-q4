@@ -264,9 +264,9 @@ def operador():
                                         text=f"{oneparameter} parametros")
             i += 1
     '''
-    Entrada:
-    Descripción:
-    Salida:
+    Entrada: No tiene entrada.
+    Descripción: Genera un DataFrame a partir de un archivo csv en espeficifico.
+    Salida: DataFrame del csv.
     '''
     def plot():
         def leer():
@@ -275,9 +275,9 @@ def operador():
 
             return df
         '''
-        Entrada:
-        Descripción:
-        Salida:
+        Entrada: DataFame retornado de la función plot()
+        Descripción: Cuenta la cantidad de cada uno de los parametros del Dataframe.
+        Salida: Una lista con las cantidades de cada uno de los parametros de las denuncias.
         '''
         def cuentaParametros(df):
             dimension = df.shape
