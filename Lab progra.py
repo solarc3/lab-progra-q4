@@ -356,9 +356,9 @@ def operador():
     smapa.mainloop()
 
 '''
-Entrada:
-Descripción:
-Salida:
+Entrada: No tiene entrada.
+Descripción: Presenta una interfaz inicial en la que el usuario debe indentificarse acorde a su tipo de usuario.
+Salida: Una ventana en la que se selecciona el tipo de usuario
 '''
 def starting_menu():
     menu.geometry("400x200")
