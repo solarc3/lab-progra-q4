@@ -141,32 +141,32 @@ def denunciante():
     app.boton_check.grid(pady=(20, 0), padx=(20, 20), row=8,
                          column=0, sticky="nswe")
     app.boton6 = customtkinter.CTkCheckBox(master=app.frame_left,
-                                           text="PLACEHOLDER 6",
+                                           text="La fuga produce humedad en el area",
                                            onvalue=1, offvalue=0,
                                            variable=is_checked_6)
     app.boton6.grid(row=6, column=0, pady=10, padx=20, sticky="w")
     app.boton5 = customtkinter.CTkCheckBox(master=app.frame_left,
-                                           text="PLACEHOLDER 5",
+                                           text="La fuga presenta una o más deformaciones al terreno",
                                            onvalue=1, offvalue=0,
                                            variable=is_checked_5)
     app.boton5.grid(row=5, column=0, pady=10, padx=20, sticky="w")
     app.boton4 = customtkinter.CTkCheckBox(master=app.frame_left,
-                                           text="PLACEHOLDER 4",
+                                           text="Fuga visible en la superficie",
                                            onvalue=1, offvalue=0,
                                            variable=is_checked_4)
     app.boton4.grid(row=4, column=0, pady=10, padx=20, sticky="w")
     app.boton3 = customtkinter.CTkCheckBox(master=app.frame_left,
-                                           text="PLACEHOLDER 3",
+                                           text="Fuga de gran volumen",
                                            onvalue=1, offvalue=0,
                                            variable=is_checked_3)
     app.boton3.grid(row=3, column=0, pady=10, padx=20, sticky="w")
     app.boton2 = customtkinter.CTkCheckBox(master=app.frame_left,
-                                           text="PLACEHOLDER 2",
+                                           text="Afecta un espacio público",
                                            onvalue=1, offvalue=0,
                                            variable=is_checked_2)
     app.boton2.grid(row=2, column=0, pady=10, padx=20, sticky="w")
     app.boton1 = customtkinter.CTkCheckBox(master=app.frame_left,
-                                           text="PLACEHOLDER 1",
+                                           text="Afecta a una residencia partícular",
                                            onvalue=1, offvalue=0,
                                            variable=is_checked_1)
     app.boton1.grid(row=1, column=0, pady=10, padx=20, sticky="w")
