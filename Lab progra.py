@@ -44,7 +44,11 @@ Descripcion: Funcion principal para la GUI de denuncias de cortes de agua
 Salida: GUI con mapa para poder hacer las denuncias
 '''
 
-
+'''
+Entrada: No tiene entrada.
+Descripción: Función asociada a la parte del sistema con la que interactua el usuario denunciante.
+Salida: Mapa y botones para ingresar las denuncias.
+'''
 def denunciante():
     # se agregan variables globables para usarlas despues
     global amount
@@ -52,7 +56,7 @@ def denunciante():
     global markerpos
     markerpos = []
     '''
-    Entrada: No tiene entrada.
+    Entrada: Coordenadas del punto seleccionado en la denuncia.
     Descripcion: Funcion para analizar la entrada de coordenadas en tuple y
     confirmar si estan dentro de la comuna de maipu via comparacion burda de
     los numeros iniciales del codigo postal (925)
@@ -243,7 +247,7 @@ def operador():
     Entrada: No tiene entrada.
     Descripcion: Funcion para invocar todas las coordenadas del csv y
     su respectivo marcador
-    Salida: marcadores tkinter canvas invocados en el frame del mapa
+    Salida: Marcadores tkinter canvas invocados en el frame del mapa
     '''
     def csv_input():
         i = 0
@@ -259,14 +263,22 @@ def operador():
             smapa.map_widget.set_marker(lat, long,
                                         text=f"{oneparameter} parametros")
             i += 1
-
+    '''
+    Entrada:
+    Descripción:
+    Salida:
+    '''
     def plot():
         def leer():
             archivo = "experimental.csv"
             df = pd.read_csv(archivo, sep=";", header=None)
 
             return df
-
+        '''
+        Entrada:
+        Descripción:
+        Salida:
+        '''
         def cuentaParametros(df):
             dimension = df.shape
             cantidad_parametros = [0, 0, 0, 0, 0, 0, 0]
@@ -343,7 +355,11 @@ def operador():
                            column=0, sticky="nswe")
     smapa.mainloop()
 
-
+'''
+Entrada:
+Descripción:
+Salida:
+'''
 def starting_menu():
     menu.geometry("400x200")
     menu.title("Seleccion de Usuario")
