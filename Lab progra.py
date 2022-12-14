@@ -192,10 +192,12 @@ def selection():
     sum = is_checked_1.get() + is_checked_2.get() + is_checked_3.get() + \
         is_checked_4.get() + is_checked_5.get() + is_checked_6.get()
     tk.messagebox.showinfo(
-        "Completado", f"{sum} parametros fueron seleccionados y las coordenadas son {latleng}")
-    # sublista de cords y la cantidad de checkboxs es lo que nos interesa exportar
+        "Completado",
+        f"{sum} parametros seleccionados  y las coordenadas son {latleng}")
+    # sublista de cords y la cantidad de checkboxs es lo que
+    # nos interesa exportar
 
-    #Elaboracion del dataframe
+    # Elaboracion del dataframe
     export_sum = []
     export_coord = []
     export_coord_aux = []
@@ -206,13 +208,13 @@ def selection():
 
     columna1 = ["Parametros"]
     columna2 = ["Coordenadas"]
-    df_coord = pd.DataFrame(export_coord_aux,columns=columna2)
-    df_param = pd.DataFrame(export_sum,columns=columna1)
-    df_datos = pd.concat([df_param,df_coord],axis=1)
+    df_coord = pd.DataFrame(export_coord_aux, columns=columna2)
+    df_param = pd.DataFrame(export_sum, columns=columna1)
+    df_datos = pd.concat([df_param, df_coord], axis=1)
 
-    #Exportación del dataframe
+    # Exportación del dataframe
     df_datos.to_csv("experimental.csv",
-              index=False, sep=";", header=False,mode="a")
+                    index=False, sep=";", header=False, mode="a")
 
 
 '''
@@ -265,7 +267,8 @@ def operador():
             i += 1
     '''
     Entrada: No tiene entrada.
-    Descripción: Genera un DataFrame a partir de un archivo csv en espeficifico.
+    Descripción: Genera un DataFrame a partir de
+    un archivo csv en espeficifico.
     Salida: DataFrame del csv.
     '''
     def plot():
@@ -276,8 +279,10 @@ def operador():
             return df
         '''
         Entrada: DataFame retornado de la función plot()
-        Descripción: Cuenta la cantidad de cada uno de los parametros del Dataframe.
-        Salida: Una lista con las cantidades de cada uno de los parametros de las denuncias.
+        Descripción: Cuenta la cantidad de cada uno de
+        los parametros del Dataframe.
+        Salida: Una lista con las cantidades de cada uno de los
+        parametros de las denuncias.
         '''
         def cuentaParametros(df):
             dimension = df.shape
@@ -342,7 +347,7 @@ def operador():
     smapa.map_widget.set_zoom(14)
 
     smapa.boton_check = customtkinter.CTkButton(master=smapa.frame_left,
-                                                text="PLACEHOLDER",
+                                                text="Ingresar Denuncias registradas",
                                                 command=csv_input)
     # placeholder para agregar el comando de csv input
     smapa.boton_check.grid(pady=(20, 0), padx=(20, 20), row=7,
@@ -355,11 +360,15 @@ def operador():
                            column=0, sticky="nswe")
     smapa.mainloop()
 
+
 '''
 Entrada: No tiene entrada.
-Descripción: Presenta una interfaz inicial en la que el usuario debe indentificarse acorde a su tipo de usuario.
+Descripción: Presenta una interfaz inicial en la que el usuario debe
+indentificarse acorde a su tipo de usuario.
 Salida: Una ventana en la que se selecciona el tipo de usuario
 '''
+
+
 def starting_menu():
     menu.geometry("400x200")
     menu.title("Seleccion de Usuario")
