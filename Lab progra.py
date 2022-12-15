@@ -310,7 +310,7 @@ def operador():
         df_proyecto = leer()
         contador = cuentaParametros(df_proyecto)
         etiquetas = [0, 1, 2, 3, 4, 5, 6]  # x
-        valores = int(contador)  # y
+        valores = contador  # y
         plt.bar(etiquetas, valores)
         plt.xlabel("Cantidad de Parametros")
         plt.ylabel("Repeticion de Parametros")
