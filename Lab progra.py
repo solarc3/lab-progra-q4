@@ -12,14 +12,15 @@
 # 6. Ignacio Vicenzo D'agostino Jara 21.226.101-7
 # DESCRIPCIÓN DEL PROGRAMA
 '''
-Parte 2 del sistema de denuncias de agua.
-Que funciona ahora mismo?:
+Parte 3 del sistema de denuncias de agua.
+Con los avances realizados en esta parte, ya está implementado todo lo
+propuesto en el Plan de Release del grupo. Este incluye:
 -Sistema de seleccion de entrada entre denunciante o funcionario de SMAPA
 -Sistema para agregar marcadores en el mapa que sean solamente en Maipu
-- (nuevo) Logeo y limite de marcadores agregado
-- checkboxs placeholders para las condiciones de las denuncias
-- exportacion de coordenadas en tuple a un csv
-- lo unico que falta es cargar los datos a la interfaz de smapa
+-Logeo y limite de marcadores agregado
+-Checkbox's para las condiciones de las denuncias
+-Exportacion de coordenadas en tuple a un csv
+-Cargar los datos a la interfaz de smapa
 '''
 
 
