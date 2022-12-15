@@ -69,13 +69,15 @@ def denunciante():
         global markerpos
         real = utility_functions.convert_coordinates_to_address(cords[0],
                                                                 cords[1])
-#        print(real.street, real.housenumber, real.latlng, real.postal)
+        # se confirma la posicion del click con
+        # los 3 primeros digitos del codigo postal que es generado
         if real.postal[0] == "9" and real.postal[1] == "2" and real.postal[2] == "5" and amount == 0:
             markerpos.append(app.map_widget.set_marker(cords[0], cords[1]))
             global latleng
-            latleng = real.latlng
-#            print(markerpos)
+            latleng = real.latlng # se guarda la variable
             amount = amount + 1
+            # se busca las posiciones del codigo postal
+            # para ver si esta en maipu
         elif amount >= 1 and real.postal[0] == "9" and real.postal[1] == "2" and real.postal[2] == "5":
             tk.messagebox.showinfo("Error",
                                    "Ya seleccionaste una posicion para el marcador, debes reiniciar tu seleccion con el boton")
@@ -253,16 +255,20 @@ def operador():
     Salida: Marcadores tkinter canvas invocados en el frame del mapa
     '''
     def csv_input():
+        # se ordena y se busca los datos del df
         i = 0
         datos = pd.read_csv("experimental.csv", sep=";", header=None)
         datosy = datos[1]
         datosx = datos[0]
         largo = len(datosy)
+        # carga iterativa de los datos
         while i < largo:
             oneparameter = datosx.iloc[i]
             onedata = eval(datosy.iloc[i])
             lat = onedata[0]
             long = onedata[1]
+            # al encontrar ambas posiciones de un unico dato
+            # se separa y se agregar al mapa con set_marker
             smapa.map_widget.set_marker(lat, long,
                                         text=f"{oneparameter} parametros")
             i += 1
@@ -310,7 +316,7 @@ def operador():
         df_proyecto = leer()
         contador = cuentaParametros(df_proyecto)
         etiquetas = [0, 1, 2, 3, 4, 5, 6]  # x
-        valores = contador  # y
+        valores = int(contador)  # y
         plt.bar(etiquetas, valores)
         plt.xlabel("Cantidad de Parametros")
         plt.ylabel("Repeticion de Parametros")
@@ -346,17 +352,16 @@ def operador():
     # --- defaults map_widget
     smapa.map_widget.set_address("Maipu")
     smapa.map_widget.set_zoom(14)
-
+    # boton config master
     smapa.boton_check = customtkinter.CTkButton(master=smapa.frame_left,
-                                                text="Ingresar Denuncias registradas",
+                                                text="Ingresar Denuncias Registradas",
                                                 command=csv_input)
-    # placeholder para agregar el comando de csv input
     smapa.boton_check.grid(pady=(20, 0), padx=(20, 20), row=7,
                            column=0, sticky="nswe")
+    # boton para graficar con matplolib
     smapa.boton_graph = customtkinter.CTkButton(master=smapa.frame_left,
-                                                text="analisis",
+                                                text="Analisis Estadistico",
                                                 command=plot)
-    # placeholder para agregar el comando de csv input
     smapa.boton_graph.grid(pady=(20, 0), padx=(20, 20), row=8,
                            column=0, sticky="nswe")
     smapa.mainloop()
