@@ -74,20 +74,16 @@ def denunciante():
                                                                 cords[1])
         # se confirma la posicion del click con
         # los 3 primeros digitos del codigo postal que es generado
-        if real.postal[0] == "9" and real.postal[1] == "2"\
-                and real.postal[2] == "5" and amount == 0:
+        if real.postal[0] == "9" and real.postal[1] == "2" and real.postal[2] == "5" and amount == 0:
             markerpos.append(app.map_widget.set_marker(cords[0], cords[1]))
             global latleng
             latleng = real.latlng  # se guarda la variable
             amount = amount + 1
             # se busca las posiciones del codigo postal
             # para ver si esta en maipu
-        elif amount >= 1 and real.postal[0] == "9" and real.postal[1] == "2"\
-                and real.postal[2] == "5":
+        elif amount >= 1 and real.postal[0] == "9" and real.postal[1] == "2" and real.postal[2] == "5":
             tk.messagebox.showinfo("Error",
-                                   "Ya seleccionaste una posicion para el \
-                                    marcador, debes reiniciar tu seleccion con\
-                                    el boton")
+                                   "Ya seleccionaste una posicion para el marcador, debes reiniciar tu seleccion con el boton")
         else:
             tk.messagebox.showinfo("Error",
                                    "El lugar seleccionado no esta en maipu")
@@ -151,20 +147,17 @@ def denunciante():
     app.boton_check.grid(pady=(20, 0), padx=(20, 20), row=8,
                          column=0, sticky="nswe")
     app.boton6 = customtkinter.CTkCheckBox(master=app.frame_left,
-                                           text="La fuga produce humedad \
-                                           en el area",
+                                           text="La fuga produce humedad en el area",
                                            onvalue=1, offvalue=0,
                                            variable=is_checked_6)
     app.boton6.grid(row=6, column=0, pady=10, padx=20, sticky="w")
     app.boton5 = customtkinter.CTkCheckBox(master=app.frame_left,
-                                           text="La fuga presenta una o más \
-                                           deformaciones al terreno",
+                                           text="La fuga presenta una o más deformaciones al terreno",
                                            onvalue=1, offvalue=0,
                                            variable=is_checked_5)
     app.boton5.grid(row=5, column=0, pady=10, padx=20, sticky="w")
     app.boton4 = customtkinter.CTkCheckBox(master=app.frame_left,
-                                           text="Fuga visible en la \
-                                           superficie",
+                                           text="Fuga visible en la superficie",
                                            onvalue=1, offvalue=0,
                                            variable=is_checked_4)
     app.boton4.grid(row=4, column=0, pady=10, padx=20, sticky="w")
@@ -179,8 +172,7 @@ def denunciante():
                                            variable=is_checked_2)
     app.boton2.grid(row=2, column=0, pady=10, padx=20, sticky="w")
     app.boton1 = customtkinter.CTkCheckBox(master=app.frame_left,
-                                           text="Afecta a una residencia\
-                                           partícular",
+                                           text="Afecta a una residencia partícular",
                                            onvalue=1, offvalue=0,
                                            variable=is_checked_1)
     app.boton1.grid(row=1, column=0, pady=10, padx=20, sticky="w")
@@ -364,8 +356,7 @@ def operador():
     smapa.map_widget.set_zoom(14)
     # boton config master
     smapa.boton_check = customtkinter.CTkButton(master=smapa.frame_left,
-                                                text="Ingresar Denuncias\
-                                                Registradas",
+                                                text="Ingresar Denuncias Registradas",
                                                 command=csv_input)
     smapa.boton_check.grid(pady=(20, 0), padx=(20, 20), row=7,
                            column=0, sticky="nswe")
