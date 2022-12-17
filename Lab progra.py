@@ -90,7 +90,7 @@ def denunciante():
 
     app = customtkinter.CTk()  # Constante inicial para iniciar
     app.geometry("800x500")
-    app.title("GUI denuncias de fugas")  # Titulo de la ventana
+    app.title("Denuncia de fugas de agua")  # Titulo de la ventana
     # -- bloque de geometria para el mapa
     app.grid_columnconfigure(0, weight=0)
     app.grid_columnconfigure(1, weight=1)
