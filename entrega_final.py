@@ -4,12 +4,6 @@
 # PROFESOR DE LABORATORIO: LUIS RIOS / ALEX MUÑOZ
 # GRUPO: 1
 # INTEGRANTES
-# 1. Ignacio Andres Solar Arce 21.284.189-7
-# 2. Vicente Gerardo Arce Palacios 21.538.935-9
-# 3. Vicente Aníbal Aninat Norambuena  21.254.766-2
-# 4. Ignacio Isaias Celis Castro 21.243.649-6
-# 5. Gabriel Alejandro Marin Huerta 21.323.284-3
-# 6. Ignacio Vicenzo D'agostino Jara 21.226.101-7
 # DESCRIPCIÓN DEL PROGRAMA
 '''
 Parte 3 del sistema de denuncias de agua.
